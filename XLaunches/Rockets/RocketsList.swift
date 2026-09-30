@@ -3,11 +3,11 @@ import SpaceXAPI
 
 @Observable
 final class RocketsList {
-    var rockets: Loadable<[Rocket]>
-    let client: SpaceXApiClient
+    private(set) var rockets: Loadable<[Rocket]>
+    private let client: SpaceXApiClient
 
-    var nextPage: SpaceXApiClient.Page? = .init(offset: 0, limit: 10)
-    var nextPageFailed: Bool = false
+    private(set) var nextPage: SpaceXApiClient.Page? = .init(offset: 0, limit: 10)
+    private(set) var nextPageFailed: Bool = false
 
     init(rockets: Loadable<[Rocket]> = .initial, client: SpaceXApiClient) {
         self.rockets = rockets

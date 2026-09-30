@@ -8,8 +8,8 @@ struct RocketName: Hashable {
 @Observable
 final class RocketDetails {
     let name: String
-    var details: Loadable<Rocket?> = .initial
-    let client: SpaceXApiClient
+    private(set) var details: Loadable<Rocket?> = .initial
+    private let client: SpaceXApiClient
 
     init(name: RocketName, client: SpaceXApiClient) {
         self.name = name.value

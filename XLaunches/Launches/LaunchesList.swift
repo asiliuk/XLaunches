@@ -15,10 +15,10 @@ final class LaunchesList {
 
     private var content: LaunchesLoadable
 
-    let client: SpaceXApiClient
+    private let client: SpaceXApiClient
 
-    var nextPage: SpaceXApiClient.Page?
-    var nextPageFailed: Bool = false
+    private(set) var nextPage: SpaceXApiClient.Page?
+    private(set) var nextPageFailed: Bool = false
 
     var filters: Filters?
     var isFiltersPresented: Bool = false
