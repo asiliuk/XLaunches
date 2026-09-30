@@ -1,6 +1,29 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "Rockets View" : {
+
+    },
+    "screen.launches.section.past.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Past"
+          }
+        }
+      }
+    },
+    "screen.launches.section.upcoming.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upcoming"
+          }
+        }
+      }
+    },
     "screen.launches.title" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -19,6 +42,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rockets"
+          }
+        }
+      }
+    },
+    "view.launch-status.failure" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failure"
+          }
+        }
+      }
+    },
+    "view.launch-status.success" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Success"
           }
         }
       }
