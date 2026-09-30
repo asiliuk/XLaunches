@@ -19,6 +19,12 @@ struct LaunchesView: View {
                             ForEach(launches, id: \.name) { launch in
                                 PastLaunchRow(launch: launch)
                             }
+
+                            if viewModel.nextPageFailed {
+                                LoadMoreFailedRow { await viewModel.nextPage() }
+                            } else if viewModel.nextPage != nil {
+                                LoadMoreRow { await viewModel.nextPage() }
+                            }
                         }
                     }
                 }

@@ -9,6 +9,12 @@ struct RocketsView: View {
             LoadableView(loadable: viewModel.rockets) { rockets in
                 List(rockets, id: \.name) { rocket in
                     RocketRow(rocket: rocket)
+
+                    if viewModel.nextPageFailed {
+                        LoadMoreFailedRow { await viewModel.nextPage() }
+                    } else if viewModel.nextPage != nil {
+                        LoadMoreRow { await viewModel.nextPage() }
+                    }
                 }
             }
             .navigationTitle("screen.rockets.title")

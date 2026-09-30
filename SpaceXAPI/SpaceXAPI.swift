@@ -165,6 +165,17 @@ extension SpaceXApiClient {
 
 // MARK: - Pagination
 
+public extension SpaceXApiClient.Page? {
+    mutating func move(loadedCount: Int) {
+        guard let current = self else { return }
+        if loadedCount >= current.limit {
+            self = .init(offset: current.offset + loadedCount, limit: current.limit)
+        } else {
+            self = nil
+        }
+    }
+}
+
 private extension SpaceXApiClient {
     /// API replacement does not support proper pagination, this is workaround to emulate it
     static func paginate<Model>(list: [Model], page: Page?) -> [Model] {
