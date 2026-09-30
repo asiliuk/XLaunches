@@ -20,13 +20,6 @@
 			remoteGlobalIDString = E6EE597A306CF0F1002014EA;
 			remoteInfo = XLaunches;
 		};
-		E6EE5993306CF0F3002014EA /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E6EE5973306CF0F1002014EA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E6EE597A306CF0F1002014EA;
-			remoteInfo = XLaunches;
-		};
 		E6EE59B6306CF2AF002014EA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E6EE5973306CF0F1002014EA /* Project object */;
@@ -67,7 +60,6 @@
 /* Begin PBXFileReference section */
 		E6EE597B306CF0F1002014EA /* XLaunches.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XLaunches.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6EE5988306CF0F3002014EA /* XLaunchesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XLaunchesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		E6EE5992306CF0F3002014EA /* XLaunchesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XLaunchesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6EE59AA306CF2AE002014EA /* SpaceXAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SpaceXAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6EE59B4306CF2AF002014EA /* SpaceXAPITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpaceXAPITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -81,11 +73,6 @@
 		E6EE598B306CF0F3002014EA /* XLaunchesTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = XLaunchesTests;
-			sourceTree = "<group>";
-		};
-		E6EE5995306CF0F3002014EA /* XLaunchesUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = XLaunchesUITests;
 			sourceTree = "<group>";
 		};
 		E6EE59AB306CF2AE002014EA /* SpaceXAPI */ = {
@@ -116,13 +103,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E6EE598F306CF0F3002014EA /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		E6EE59A7306CF2AE002014EA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -146,7 +126,6 @@
 			children = (
 				E6EE597D306CF0F1002014EA /* XLaunches */,
 				E6EE598B306CF0F3002014EA /* XLaunchesTests */,
-				E6EE5995306CF0F3002014EA /* XLaunchesUITests */,
 				E6EE59AB306CF2AE002014EA /* SpaceXAPI */,
 				E6EE59BA306CF2AF002014EA /* SpaceXAPITests */,
 				E6EE597C306CF0F1002014EA /* Products */,
@@ -158,7 +137,6 @@
 			children = (
 				E6EE597B306CF0F1002014EA /* XLaunches.app */,
 				E6EE5988306CF0F3002014EA /* XLaunchesTests.xctest */,
-				E6EE5992306CF0F3002014EA /* XLaunchesUITests.xctest */,
 				E6EE59AA306CF2AE002014EA /* SpaceXAPI.framework */,
 				E6EE59B4306CF2AF002014EA /* SpaceXAPITests.xctest */,
 			);
@@ -225,29 +203,6 @@
 			productReference = E6EE5988306CF0F3002014EA /* XLaunchesTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		E6EE5991306CF0F3002014EA /* XLaunchesUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = E6EE59A2306CF0F3002014EA /* Build configuration list for PBXNativeTarget "XLaunchesUITests" */;
-			buildPhases = (
-				E6EE598E306CF0F3002014EA /* Sources */,
-				E6EE598F306CF0F3002014EA /* Frameworks */,
-				E6EE5990306CF0F3002014EA /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				E6EE5994306CF0F3002014EA /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				E6EE5995306CF0F3002014EA /* XLaunchesUITests */,
-			);
-			name = XLaunchesUITests;
-			packageProductDependencies = (
-			);
-			productName = XLaunchesUITests;
-			productReference = E6EE5992306CF0F3002014EA /* XLaunchesUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 		E6EE59A9306CF2AE002014EA /* SpaceXAPI */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E6EE59C1306CF2AF002014EA /* Build configuration list for PBXNativeTarget "SpaceXAPI" */;
@@ -312,10 +267,6 @@
 						CreatedOnToolsVersion = 26.6;
 						TestTargetID = E6EE597A306CF0F1002014EA;
 					};
-					E6EE5991306CF0F3002014EA = {
-						CreatedOnToolsVersion = 26.6;
-						TestTargetID = E6EE597A306CF0F1002014EA;
-					};
 					E6EE59A9306CF2AE002014EA = {
 						CreatedOnToolsVersion = 26.6;
 					};
@@ -341,7 +292,6 @@
 			targets = (
 				E6EE597A306CF0F1002014EA /* XLaunches */,
 				E6EE5987306CF0F3002014EA /* XLaunchesTests */,
-				E6EE5991306CF0F3002014EA /* XLaunchesUITests */,
 				E6EE59A9306CF2AE002014EA /* SpaceXAPI */,
 				E6EE59B3306CF2AF002014EA /* SpaceXAPITests */,
 			);
@@ -357,13 +307,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		E6EE5986306CF0F3002014EA /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E6EE5990306CF0F3002014EA /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -401,13 +344,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E6EE598E306CF0F3002014EA /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		E6EE59A6306CF2AE002014EA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -429,11 +365,6 @@
 			isa = PBXTargetDependency;
 			target = E6EE597A306CF0F1002014EA /* XLaunches */;
 			targetProxy = E6EE5989306CF0F3002014EA /* PBXContainerItemProxy */;
-		};
-		E6EE5994306CF0F3002014EA /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = E6EE597A306CF0F1002014EA /* XLaunches */;
-			targetProxy = E6EE5993306CF0F3002014EA /* PBXContainerItemProxy */;
 		};
 		E6EE59B7306CF2AF002014EA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -682,46 +613,6 @@
 			};
 			name = Release;
 		};
-		E6EE59A3306CF0F3002014EA /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 636FUHDF2R;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.asiliuk.XLaunchesUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = XLaunches;
-			};
-			name = Debug;
-		};
-		E6EE59A4306CF0F3002014EA /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 636FUHDF2R;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.asiliuk.XLaunchesUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = XLaunches;
-			};
-			name = Release;
-		};
 		E6EE59C2306CF2AF002014EA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -864,15 +755,6 @@
 			buildConfigurations = (
 				E6EE59A0306CF0F3002014EA /* Debug */,
 				E6EE59A1306CF0F3002014EA /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		E6EE59A2306CF0F3002014EA /* Build configuration list for PBXNativeTarget "XLaunchesUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				E6EE59A3306CF0F3002014EA /* Debug */,
-				E6EE59A4306CF0F3002014EA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
