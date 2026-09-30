@@ -6,9 +6,19 @@ import Foundation
 // MARK: - Client
 
 public struct SpaceXApiClient {
-    public let pastLaunches: () async throws -> [PastLaunch]
+    public struct Page {
+        public let offset: Int
+        public let limit: Int
+
+        public init(offset: Int, limit: Int) {
+            self.offset = offset
+            self.limit = limit
+        }
+    }
+
+    public let pastLaunches: (_ page: Page?) async throws -> [PastLaunch]
     public let nextLaunch: () async throws -> NextLaunch?
-    public let rockets: () async throws -> [Rocket]
+    public let rockets: (_ page: Page?) async throws -> [Rocket]
 }
 
 // MARK: - Models
@@ -61,7 +71,7 @@ extension SpaceXApiClient {
 
     public static func live(urlSession: URLSession = .shared) -> SpaceXApiClient {
         SpaceXApiClient(
-            pastLaunches: {
+            pastLaunches: { page in
                 let decoder = JSONDecoder()
                 decoder.dateDecodingStrategy = .iso8601
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
@@ -69,7 +79,8 @@ extension SpaceXApiClient {
                 let request = URLRequest(url: apiURL(path: "/spacex/v4/launches/past"))
                 let (data, response) = try await urlSession.data(for: request)
                 try validate(response: response)
-                return try decoder.decode([PastLaunch].self, from: data)
+                let launches = try decoder.decode([PastLaunch].self, from: data)
+                return paginate(list: launches, page: page)
             },
             nextLaunch: {
                 let decoder = JSONDecoder()
@@ -81,7 +92,7 @@ extension SpaceXApiClient {
                 try validate(response: response)
                 return try decoder.decode(NextLaunch?.self, from: data)
             },
-            rockets: {
+            rockets: { page in
                 let decoder = JSONDecoder()
                 decoder.dateDecodingStrategy = .formatted(dayDateFormatter)
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
@@ -89,7 +100,8 @@ extension SpaceXApiClient {
                 let request = URLRequest(url: apiURL(path: "/spacex/v4/rockets"))
                 let (data, response) = try await urlSession.data(for: request)
                 try validate(response: response)
-                return try decoder.decode([Rocket].self, from: data)
+                let rockets = try decoder.decode([Rocket].self, from: data)
+                return paginate(list: rockets, page: page)
             }
         )
     }
@@ -122,4 +134,41 @@ extension SpaceXApiClient {
     }()
 
     private static let baseComponents: URLComponents = URLComponents(string: "https://gateway.pipeworx.io")!
+}
+
+// MARK: - Mock
+
+#if DEBUG
+extension SpaceXApiClient {
+    private struct MockAPIFailure: Error, CustomStringConvertible {
+        let description: String
+    }
+
+    public static func failure(delay: Duration? = nil, message: String? = nil) -> SpaceXApiClient {
+        return SpaceXApiClient(
+            pastLaunches: { _ in
+                if let delay { try await Task.sleep(for: delay) }
+                throw MockAPIFailure(description: message ?? "#pastLaunches failed")
+            },
+            nextLaunch: {
+                if let delay { try await Task.sleep(for: delay) }
+                throw MockAPIFailure(description: message ?? "#nextLaunch failed")
+            },
+            rockets: { _ in
+                if let delay { try await Task.sleep(for: delay) }
+                throw MockAPIFailure(description: message ?? "#rockets failed")
+            }
+        )
+    }
+}
+#endif
+
+// MARK: - Pagination
+
+private extension SpaceXApiClient {
+    /// API replacement does not support proper pagination, this is workaround to emulate it
+    static func paginate<Model>(list: [Model], page: Page?) -> [Model] {
+        guard let page else { return list }
+        return Array(list.dropFirst(page.offset).prefix(page.limit))
+    }
 }
