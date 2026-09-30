@@ -53,6 +53,26 @@
         }
       }
     },
+    "screen.unavailable.button.retry" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Try again"
+          }
+        }
+      }
+    },
+    "screen.unavailable.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to load data"
+          }
+        }
+      }
+    },
     "view.launch-status.failure" : {
       "localizations" : {
         "en" : {

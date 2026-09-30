@@ -3,27 +3,26 @@ import SpaceXAPI
 
 @Observable
 final class LaunchesList {
-    var upcoming: NextLaunch?
-    var launches: [PastLaunch]
-    var isLoading: Bool
+    var content: Loadable<(NextLaunch?, [PastLaunch])>
     let client: SpaceXApiClient
 
-    init(upcoming: NextLaunch? = nil, launches: [PastLaunch] = [], isLoading: Bool = false, client: SpaceXApiClient) {
-        self.upcoming = upcoming
-        self.launches = launches
-        self.isLoading = isLoading
+    init(content: Loadable<(NextLaunch?, [PastLaunch])> = .initial, client: SpaceXApiClient) {
+        self.content = content
         self.client = client
     }
 
     func load() async {
-        isLoading = true
+        guard case .initial = content else { return }
+
+        content = .loading
         do {
             async let nextLaunch = try await client.nextLaunch()
             async let pastLaunches = try await client.pastLaunches()
-            (upcoming, launches) = try await (nextLaunch, pastLaunches)
+            content = try await .loaded((nextLaunch, pastLaunches))
+        } catch is CancellationError {
+            content = .initial
         } catch {
-            assertionFailure(error.localizedDescription)
+            content = .failed(error, retry: { [weak self] in await self?.load() })
         }
-        isLoading = false
     }
 }

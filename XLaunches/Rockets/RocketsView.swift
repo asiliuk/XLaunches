@@ -6,13 +6,9 @@ struct RocketsView: View {
 
     var body: some View {
         NavigationStack {
-            ZStack {
-                if viewModel.isLoading {
-                    ProgressView()
-                } else if !viewModel.rockets.isEmpty {
-                    List(viewModel.rockets, id: \.name) { rocket in
-                        RocketRow(rocket: rocket)
-                    }
+            LoadableView(loadable: viewModel.rockets) { rockets in
+                List(rockets, id: \.name) { rocket in
+                    RocketRow(rocket: rocket)
                 }
             }
             .navigationTitle("screen.rockets.title")

@@ -6,22 +6,18 @@ struct LaunchesView: View {
 
     var body: some View {
         NavigationStack {
-            ZStack {
-                if viewModel.isLoading {
-                    ProgressView()
-                } else {
-                    List {
-                        if let upcoming = viewModel.upcoming {
-                            Section("screen.launches.section.upcoming.title") {
-                                UpcomingLaunchRow(launch: upcoming)
-                            }
+            LoadableView(loadable: viewModel.content) { upcoming, launches in
+                List {
+                    if let upcoming {
+                        Section("screen.launches.section.upcoming.title") {
+                            UpcomingLaunchRow(launch: upcoming)
                         }
+                    }
 
-                        if !viewModel.launches.isEmpty {
-                            Section("screen.launches.section.past.title") {
-                                ForEach(viewModel.launches, id: \.name) { launch in
-                                    PastLaunchRow(launch: launch)
-                                }
+                    if !launches.isEmpty {
+                        Section("screen.launches.section.past.title") {
+                            ForEach(launches, id: \.name) { launch in
+                                PastLaunchRow(launch: launch)
                             }
                         }
                     }

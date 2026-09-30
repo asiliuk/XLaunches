@@ -3,23 +3,24 @@ import SpaceXAPI
 
 @Observable
 final class RocketsList {
-    var rockets: [Rocket]
-    var isLoading: Bool
+    var rockets: Loadable<[Rocket]>
     let client: SpaceXApiClient
 
-    init(rockets: [Rocket] = [], isLoading: Bool = false, client: SpaceXApiClient) {
+    init(rockets: Loadable<[Rocket]> = .initial, client: SpaceXApiClient) {
         self.rockets = rockets
-        self.isLoading = isLoading
         self.client = client
     }
 
     func load() async {
-        isLoading = true
+        guard case .initial = rockets else { return }
+
+        rockets = .loading
         do {
-            rockets = try await client.rockets()
+            rockets = try await .loaded(client.rockets())
+        } catch is CancellationError {
+            rockets = .initial
         } catch {
-            assertionFailure(error.localizedDescription)
+            rockets = .failed(error, retry: { [weak self] in await self?.load() })
         }
-        isLoading = false
     }
 }
