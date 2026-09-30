@@ -6,3 +6,11 @@ enum Loadable<Content> {
     case loaded(Content)
     case failed(Error, retry: () async -> Void)
 }
+
+extension Loadable {
+    var canLoad: Bool {
+        if case .initial = self { return true }
+        if case .failed = self { return true }
+        return false
+    }
+}

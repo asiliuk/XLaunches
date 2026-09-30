@@ -12,12 +12,12 @@ final class LaunchesList {
     }
 
     func load() async {
-        guard case .initial = content else { return }
+        guard content.canLoad else { return }
 
         content = .loading
         do {
             async let nextLaunch = try await client.nextLaunch()
-            async let pastLaunches = try await client.pastLaunches()
+            async let pastLaunches = try await client.pastLaunches(nil)
             content = try await .loaded((nextLaunch, pastLaunches))
         } catch is CancellationError {
             content = .initial

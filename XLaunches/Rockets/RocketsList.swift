@@ -12,11 +12,11 @@ final class RocketsList {
     }
 
     func load() async {
-        guard case .initial = rockets else { return }
+        guard rockets.canLoad else { return }
 
         rockets = .loading
         do {
-            rockets = try await .loaded(client.rockets())
+            rockets = try await .loaded(client.rockets(nil))
         } catch is CancellationError {
             rockets = .initial
         } catch {
