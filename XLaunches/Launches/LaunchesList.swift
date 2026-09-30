@@ -41,7 +41,7 @@ final class LaunchesList {
 
         content = .loading
         do {
-            async let nextLaunch = try await client.nextLaunch()
+            async let nextLaunch = try? await client.nextLaunch()
             async let pastLaunches = try await client.pastLaunches(nextPage)
             content = try await .loaded((nextLaunch, pastLaunches))
             try await nextPage.move(loadedCount: pastLaunches.count)
