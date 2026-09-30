@@ -10,7 +10,7 @@ struct RootView: View {
             }
 
             Tab("screen.rockets.title", systemImage: "airplane.up.forward") {
-                RocketsView()
+                RocketsView(viewModel: RocketsList())
             }
         }
     }

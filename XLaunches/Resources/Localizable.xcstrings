@@ -1,8 +1,15 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "Rockets View" : {
-
+    "%@ view.rocket-row.reusable" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ Reusable"
+          }
+        }
+      }
     },
     "screen.launches.section.past.title" : {
       "localizations" : {

@@ -1,0 +1,46 @@
+import SwiftUI
+import SpaceXAPI
+
+struct RocketsView: View {
+    let viewModel: RocketsList
+
+    var body: some View {
+        NavigationStack {
+            ZStack {
+                if viewModel.isLoading {
+                    ProgressView()
+                } else if !viewModel.rockets.isEmpty {
+                    List(viewModel.rockets, id: \.name) { rocket in
+                        RocketRow(rocket: rocket)
+                    }
+                }
+            }
+            .navigationTitle("screen.rockets.title")
+            .task { await viewModel.load() }
+        }
+    }
+}
+
+private struct RocketRow: View {
+    let rocket: Rocket
+
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text(rocket.name)
+                .font(.headline)
+            HStack {
+                Text(rocket.family)
+                if rocket.reusable {
+                    Text("\(Image(systemName: "arrow.3.trianglepath")) view.rocket-row.reusable")
+                }
+            }
+            .font(.subheadline)
+            .foregroundStyle(.secondary)
+
+        }
+    }
+}
+
+#Preview {
+    RocketsView(viewModel: RocketsList())
+}
