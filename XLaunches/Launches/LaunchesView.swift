@@ -26,7 +26,7 @@ struct LaunchesView: View {
 
                             if viewModel.nextPageFailed {
                                 LoadMoreFailedRow { await viewModel.nextPage() }
-                            } else if viewModel.nextPage != nil {
+                            } else if viewModel.canLoadMorePages {
                                 LoadMoreRow { await viewModel.nextPage() }
                             }
                         }

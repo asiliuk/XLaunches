@@ -67,7 +67,7 @@ struct LaunchesListTests {
 
         // Then
         #expect(pastLaunchesCalls == [.init(offset: 0, limit: 4)])
-        #expect(sut.nextPage != nil)
+        #expect(sut.canLoadMorePages == true)
 
 
         // When
@@ -79,7 +79,7 @@ struct LaunchesListTests {
 
         // Then
         #expect(pastLaunchesCalls == [.init(offset: 0, limit: 4), .init(offset: 4, limit: 4)])
-        #expect(sut.nextPage == nil)
+        #expect(sut.canLoadMorePages == false)
 
         // When
         await sut.nextPage()
@@ -88,6 +88,54 @@ struct LaunchesListTests {
         // Request ignored
         #expect(pastLaunchesCalls.count == 2)
     }
+
+    @Test func `next page requests when filters are applied`() async {
+        // Given
+        var client = SpaceXApiClient.failure()
+
+        var pastLaunchesCalls: [SpaceXApiClient.Page?] = []
+        var pastLaunchesToReturn: [PastLaunch] = [
+            PastLaunch(name: "Name 1", status: "Status", success: true, dateUtc: .now),
+            PastLaunch(name: "Name 2", status: "Status", success: true, dateUtc: .now.addingTimeInterval(-100)),
+        ]
+
+        client.nextLaunch = { nil }
+        client.pastLaunches = { pastLaunchesCalls.append($0); return pastLaunchesToReturn }
+
+        let sut = LaunchesList(client: client, pageSize: 2)
+        sut.filters = .init(start: .now.addingTimeInterval(-200), end: .now)
+
+        // When
+        await sut.load()
+
+        // Then
+        if case .loaded((_, let passed)) = sut.filteredContent {
+            // Shows data on UI
+            #expect(passed.map(\.name) == ["Name 1", "Name 2"])
+        } else {
+            Issue.record("Unexpected state \(sut.filteredContent)")
+        }
+        // Can load more pages because last fetch launch does not exceed filter
+        #expect(sut.canLoadMorePages == true)
+
+        // When
+        pastLaunchesToReturn = [
+            PastLaunch(name: "Name 3", status: "Status", success: true, dateUtc: .now.addingTimeInterval(-200)),
+            PastLaunch(name: "Name 4", status: "Status", success: true, dateUtc: .now.addingTimeInterval(-300)),
+        ]
+        await sut.nextPage()
+
+        // Then
+        if case .loaded((_, let passed)) = sut.filteredContent {
+            // Filters `Name 4` from UI
+            #expect(passed.map(\.name) == ["Name 1", "Name 2", "Name 3"])
+        } else {
+            Issue.record("Unexpected state \(sut.filteredContent)")
+        }
+        // Does not want to load more pages
+        #expect(sut.canLoadMorePages == false)
+    }
+
 
     @Test func `filter button tapped presents sheet with existing filters`() {
         // Given

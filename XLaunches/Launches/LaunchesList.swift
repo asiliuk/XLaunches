@@ -17,7 +17,19 @@ final class LaunchesList {
 
     private let client: SpaceXApiClient
 
-    private(set) var nextPage: SpaceXApiClient.Page?
+    private var nextPage: SpaceXApiClient.Page?
+    var canLoadMorePages: Bool {
+        // Loaded all the pages
+        if nextPage == nil { return false }
+
+        // Check if we're actively filtering content
+        if let filters, case .loaded((_, let passed)) = content, let last = passed.last {
+            // We should load next page only if currently loaded content still fits filter range
+            return last.dateUtc > filters.start
+        }
+
+        return true
+    }
     private(set) var nextPageFailed: Bool = false
 
     var filters: Filters?
