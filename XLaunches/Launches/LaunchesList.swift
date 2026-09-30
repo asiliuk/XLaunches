@@ -81,4 +81,8 @@ final class LaunchesList {
         filters = nil
         isFiltersPresented = false
     }
+
+    func rocketDetails(name: RocketName) -> RocketDetails {
+        RocketDetails(name: name, client: client)
+    }
 }

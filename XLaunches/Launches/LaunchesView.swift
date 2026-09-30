@@ -10,14 +10,18 @@ struct LaunchesView: View {
                 List {
                     if let upcoming {
                         Section("screen.launches.section.upcoming.title") {
-                            UpcomingLaunchRow(launch: upcoming)
+                            NavigationLink(value: upcoming) {
+                                UpcomingLaunchRow(launch: upcoming)
+                            }
                         }
                     }
 
                     if !launches.isEmpty {
                         Section("screen.launches.section.past.title") {
                             ForEach(launches, id: \.name) { launch in
-                                PastLaunchRow(launch: launch)
+                                NavigationLink(value: launch) {
+                                    PastLaunchRow(launch: launch)
+                                }
                             }
 
                             if viewModel.nextPageFailed {
@@ -41,6 +45,15 @@ struct LaunchesView: View {
                         }
                     }
                 }
+            }
+            .navigationDestination(for: NextLaunch.self) { launch in
+                UpcomingLaunchDetailsView(launch: launch)
+            }
+            .navigationDestination(for: PastLaunch.self) { launch in
+                PastLaunchDetailsView(launch: launch)
+            }
+            .navigationDestination(for: RocketName.self) { rocketName in
+                RocketDetailsView(viewModel: viewModel.rocketDetails(name: rocketName))
             }
             .navigationTitle("screen.launches.title")
             .task { await viewModel.load() }

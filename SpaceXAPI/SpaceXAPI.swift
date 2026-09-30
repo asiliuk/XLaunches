@@ -23,11 +23,19 @@ public struct SpaceXApiClient {
 
 // MARK: - Models
 
-public struct PastLaunch: Decodable {
+public struct PastLaunch: Decodable, Hashable {
     public var name: String
     public var status: String
     public var success: Bool
     public var dateUtc: Date
+
+    public var rocket: String {
+        name.components(separatedBy: " | ").first ?? ""
+    }
+
+    public var payload: String {
+        name.components(separatedBy: " | ").last ?? ""
+    }
 
     public init(name: String, status: String, success: Bool, dateUtc: Date) {
         self.name = name
@@ -37,11 +45,15 @@ public struct PastLaunch: Decodable {
     }
 }
 
-public struct NextLaunch: Decodable {
-    public struct Links: Decodable {
+public struct NextLaunch: Decodable, Hashable {
+    public struct Links: Decodable, Hashable {
         public var article: URL?
         public var webcast: URL?
         public var wikipedia: URL?
+
+        public var isEmpty: Bool {
+            article == nil && webcast == nil && wikipedia == nil
+        }
 
         public init(article: URL? = nil, webcast: URL? = nil, wikipedia: URL? = nil) {
             self.article = article
