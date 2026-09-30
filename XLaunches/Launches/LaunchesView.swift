@@ -2,11 +2,11 @@ import SwiftUI
 import SpaceXAPI
 
 struct LaunchesView: View {
-    let viewModel: LaunchesList
+    @State var viewModel: LaunchesList
 
     var body: some View {
         NavigationStack {
-            LoadableView(loadable: viewModel.content) { upcoming, launches in
+            LoadableView(loadable: viewModel.filteredContent) { upcoming, launches in
                 List {
                     if let upcoming {
                         Section("screen.launches.section.upcoming.title") {
@@ -28,9 +28,30 @@ struct LaunchesView: View {
                         }
                     }
                 }
+                .toolbar {
+                    ToolbarItem(placement: .primaryAction) {
+                        let button = Button("screen.launches.button.filter.title", systemImage: "line.3.horizontal.decrease") {
+                            viewModel.filterButtonTapped()
+                        }
+
+                        if viewModel.filters != nil {
+                            button.buttonStyle(.borderedProminent)
+                        } else {
+                            button
+                        }
+                    }
+                }
             }
             .navigationTitle("screen.launches.title")
             .task { await viewModel.load() }
+            .popover(isPresented: $viewModel.isFiltersPresented) {
+                LaunchesFiltersView(
+                    filters: $viewModel.draftFilters,
+                    hasActiveFilters: viewModel.filters != nil,
+                    apply: viewModel.applyFiltersTapped,
+                    clear: viewModel.clearFilterButtonTapped
+                )
+            }
         }
     }
 }

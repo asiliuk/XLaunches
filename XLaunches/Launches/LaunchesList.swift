@@ -3,13 +3,35 @@ import SpaceXAPI
 
 @Observable
 final class LaunchesList {
-    var content: Loadable<(NextLaunch?, [PastLaunch])>
+    struct Filters {
+        var start: Date = .now
+        var end: Date = .now
+        fileprivate var range: ClosedRange<Date> { start...end }
+    }
+
+    typealias LaunchesLoadable = Loadable<(NextLaunch?, [PastLaunch])>
+
+    private var content: LaunchesLoadable
+
     let client: SpaceXApiClient
 
     var nextPage: SpaceXApiClient.Page? = .init(offset: 0, limit: 10)
     var nextPageFailed: Bool = false
 
-    init(content: Loadable<(NextLaunch?, [PastLaunch])> = .initial, client: SpaceXApiClient) {
+    var filters: Filters?
+    var isFiltersPresented: Bool = false
+    var draftFilters = Filters()
+
+    var filteredContent: LaunchesLoadable {
+        guard let filters else { return content }
+        return content.map { upcoming, pastLaunches in
+            let filteredUpcoming = upcoming.flatMap { filters.range.contains($0.dateUtc) ? $0 : nil }
+            let filteredPastLaunches = pastLaunches.filter { filters.range.contains($0.dateUtc) }
+            return (filteredUpcoming, filteredPastLaunches)
+        }
+    }
+
+    init(content: LaunchesLoadable = .initial, client: SpaceXApiClient) {
         self.content = content
         self.client = client
     }
@@ -43,5 +65,20 @@ final class LaunchesList {
         } catch {
             nextPageFailed = true
         }
+    }
+
+    func filterButtonTapped() {
+        draftFilters = filters ?? Filters()
+        isFiltersPresented = true
+    }
+
+    func applyFiltersTapped() {
+        filters = draftFilters
+        isFiltersPresented = false
+    }
+
+    func clearFilterButtonTapped() {
+        filters = nil
+        isFiltersPresented = false
     }
 }

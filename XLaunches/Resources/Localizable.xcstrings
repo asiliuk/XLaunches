@@ -11,6 +11,36 @@
         }
       }
     },
+    "scree.launch-filter.start.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start date:"
+          }
+        }
+      }
+    },
+    "screen.launch-filter.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filter"
+          }
+        }
+      }
+    },
+    "screen.launches.button.filter.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "End date:"
+          }
+        }
+      }
+    },
     "screen.launches.section.past.title" : {
       "localizations" : {
         "en" : {
