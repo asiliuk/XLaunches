@@ -166,4 +166,30 @@ struct LaunchesListTests {
             Issue.record("Unexpected state \(sut.filteredContent)")
         }
     }
+
+    @Test func `inverted filters range works as normal`() {
+        // Given
+        let sut = LaunchesList(
+            content: .loaded((
+                NextLaunch(pad: "Pad", name: "Future", links: .init(), rocket: "Rocket", status: "Status", details: "Details", dateUtc: .now.addingTimeInterval(100)),
+                [
+                    PastLaunch(name: "Past 1", status: "Status", success: false, dateUtc: .now.addingTimeInterval(-1000)),
+                    PastLaunch(name: "Past 2", status: "Status", success: false, dateUtc: .now.addingTimeInterval(-2000)),
+                    PastLaunch(name: "Super Past 2", status: "Status", success: false, dateUtc: .distantPast),
+                ]
+            )),
+            client: .failure()
+        )
+
+        // When
+        sut.filters = .init(start: .now.addingTimeInterval(1000), end: .now.addingTimeInterval(-1500))
+
+        // Then
+        if case .loaded((let upcoming, let passed)) = sut.filteredContent {
+            #expect(upcoming?.name == "Future")
+            #expect(passed.map(\.name) == ["Past 1"])
+        } else {
+            Issue.record("Unexpected state \(sut.filteredContent)")
+        }
+    }
 }

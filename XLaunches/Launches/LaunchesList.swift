@@ -6,7 +6,9 @@ final class LaunchesList {
     struct Filters: Equatable {
         var start: Date = .now
         var end: Date = .now
-        fileprivate var range: ClosedRange<Date> { start...end }
+        fileprivate var range: ClosedRange<Date> {
+            start < end ? start...end : end...start
+        }
     }
 
     typealias LaunchesLoadable = Loadable<(NextLaunch?, [PastLaunch])>

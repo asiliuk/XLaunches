@@ -11,10 +11,10 @@ struct LaunchesFiltersView: View {
     var body: some View {
         NavigationStack {
             List {
-                DatePicker(selection: $filters.start, displayedComponents: [.date]) {
+                DatePicker(selection: $filters.start, in: Date.distantPast...filters.end, displayedComponents: [.date]) {
                     Text("scree.launch-filter.start.title")
                 }
-                DatePicker(selection: $filters.end, displayedComponents: [.date]) {
+                DatePicker(selection: $filters.end, in: filters.start...Date.distantFuture, displayedComponents: [.date]) {
                     Text("scree.launch-filter.start.title")
                 }
             }.toolbar {
