@@ -7,7 +7,7 @@ final class RocketsList {
     var isLoading: Bool
     let client: SpaceXApiClient
 
-    init(rockets: [Rocket] = [], isLoading: Bool = false, client: SpaceXApiClient = .live()) {
+    init(rockets: [Rocket] = [], isLoading: Bool = false, client: SpaceXApiClient) {
         self.rockets = rockets
         self.isLoading = isLoading
         self.client = client

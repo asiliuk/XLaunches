@@ -42,5 +42,5 @@ private struct RocketRow: View {
 }
 
 #Preview {
-    RocketsView(viewModel: RocketsList())
+    RocketsView(viewModel: RocketsList(client: .live()))
 }

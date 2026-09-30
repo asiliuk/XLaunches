@@ -1,17 +1,13 @@
-//
-//  XLaunchesApp.swift
-//  XLaunches
-//
-//  Created by Anton Siliuk on 30/09/2026.
-//
-
 import SwiftUI
+import SpaceXAPI
 
 @main
 struct XLaunchesApp: App {
+    @State private var viewModel = RootViewModel(client: .live())
+
     var body: some Scene {
         WindowGroup {
-            RootView()
+            RootView(viewModel: viewModel)
         }
     }
 }

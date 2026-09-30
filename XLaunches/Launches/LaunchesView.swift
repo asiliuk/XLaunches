@@ -89,6 +89,6 @@ private struct LaunchStatus: View {
 
 #Preview {
     LaunchesView(
-        viewModel: LaunchesList(launches: [])
+        viewModel: LaunchesList(client: .live())
     )
 }

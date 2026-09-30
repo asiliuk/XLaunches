@@ -8,7 +8,7 @@ final class LaunchesList {
     var isLoading: Bool
     let client: SpaceXApiClient
 
-    init(upcoming: NextLaunch? = nil, launches: [PastLaunch] = [], isLoading: Bool = false, client: SpaceXApiClient = .live()) {
+    init(upcoming: NextLaunch? = nil, launches: [PastLaunch] = [], isLoading: Bool = false, client: SpaceXApiClient) {
         self.upcoming = upcoming
         self.launches = launches
         self.isLoading = isLoading
