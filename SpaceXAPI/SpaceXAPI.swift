@@ -28,6 +28,13 @@ public struct PastLaunch: Decodable {
     public var status: String
     public var success: Bool
     public var dateUtc: Date
+
+    public init(name: String, status: String, success: Bool, dateUtc: Date) {
+        self.name = name
+        self.status = status
+        self.success = success
+        self.dateUtc = dateUtc
+    }
 }
 
 public struct NextLaunch: Decodable {
@@ -35,6 +42,12 @@ public struct NextLaunch: Decodable {
         public var article: URL?
         public var webcast: URL?
         public var wikipedia: URL?
+
+        public init(article: URL? = nil, webcast: URL? = nil, wikipedia: URL? = nil) {
+            self.article = article
+            self.webcast = webcast
+            self.wikipedia = wikipedia
+        }
     }
 
     public var pad: String
@@ -45,6 +58,26 @@ public struct NextLaunch: Decodable {
     public var details: String
     public var success: Bool?
     public var dateUtc: Date
+
+    public init(
+        pad: String,
+        name: String,
+        links: Links,
+        rocket: String,
+        status: String,
+        details: String,
+        success: Bool? = nil,
+        dateUtc: Date
+    ) {
+        self.pad = pad
+        self.name = name
+        self.links = links
+        self.rocket = rocket
+        self.status = status
+        self.details = details
+        self.success = success
+        self.dateUtc = dateUtc
+    }
 }
 
 public struct Rocket: Decodable {
@@ -59,6 +92,30 @@ public struct Rocket: Decodable {
     public var successfulLaunches: Int
     public var failedLaunches: Int
     public var successRatePct: Double?
+
+    public init(
+        name: String,
+        family: String,
+        reusable: Bool,
+        description: String,
+        maidenFlight: Date? = nil,
+        launchCostUsd: Int? = nil,
+        launchCount: Int,
+        successfulLaunches: Int,
+        failedLaunches: Int,
+        successRatePct: Double? = nil
+    ) {
+        self.name = name
+        self.family = family
+        self.reusable = reusable
+        self.description = description
+        self.maidenFlight = maidenFlight
+        self.launchCostUsd = launchCostUsd
+        self.launchCount = launchCount
+        self.successfulLaunches = successfulLaunches
+        self.failedLaunches = failedLaunches
+        self.successRatePct = successRatePct
+    }
 }
 
 // MARK: - Live
