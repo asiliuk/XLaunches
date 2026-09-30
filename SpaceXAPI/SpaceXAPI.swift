@@ -6,7 +6,7 @@ import Foundation
 // MARK: - Client
 
 public struct SpaceXApiClient {
-    public struct Page {
+    public struct Page: Equatable {
         public let offset: Int
         public let limit: Int
 
@@ -16,10 +16,10 @@ public struct SpaceXApiClient {
         }
     }
 
-    public let pastLaunches: (_ page: Page?) async throws -> [PastLaunch]
-    public let nextLaunch: () async throws -> NextLaunch?
-    public let rockets: (_ page: Page?) async throws -> [Rocket]
-    public let rocket: (_ name: String) async throws -> Rocket?
+    public var pastLaunches: (_ page: Page?) async throws -> [PastLaunch]
+    public var nextLaunch: () async throws -> NextLaunch?
+    public var rockets: (_ page: Page?) async throws -> [Rocket]
+    public var rocket: (_ name: String) async throws -> Rocket?
 }
 
 // MARK: - Models

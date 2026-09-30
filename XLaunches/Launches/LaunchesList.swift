@@ -3,7 +3,7 @@ import SpaceXAPI
 
 @Observable
 final class LaunchesList {
-    struct Filters {
+    struct Filters: Equatable {
         var start: Date = .now
         var end: Date = .now
         fileprivate var range: ClosedRange<Date> { start...end }
@@ -15,7 +15,7 @@ final class LaunchesList {
 
     let client: SpaceXApiClient
 
-    var nextPage: SpaceXApiClient.Page? = .init(offset: 0, limit: 10)
+    var nextPage: SpaceXApiClient.Page?
     var nextPageFailed: Bool = false
 
     var filters: Filters?
@@ -31,9 +31,10 @@ final class LaunchesList {
         }
     }
 
-    init(content: LaunchesLoadable = .initial, client: SpaceXApiClient) {
+    init(content: LaunchesLoadable = .initial, client: SpaceXApiClient, pageSize: Int = 10) {
         self.content = content
         self.client = client
+        self.nextPage = .init(offset: 0, limit: pageSize)
     }
 
     func load() async {
