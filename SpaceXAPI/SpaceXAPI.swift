@@ -24,7 +24,7 @@ public struct SpaceXApiClient {
 
 // MARK: - Models
 
-public struct PastLaunch: Decodable, Hashable {
+public struct PastLaunch: Codable, Hashable {
     public var name: String
     public var status: String
     public var success: Bool
@@ -46,8 +46,8 @@ public struct PastLaunch: Decodable, Hashable {
     }
 }
 
-public struct NextLaunch: Decodable, Hashable {
-    public struct Links: Decodable, Hashable {
+public struct NextLaunch: Codable, Hashable {
+    public struct Links: Codable, Hashable {
         public var article: URL?
         public var webcast: URL?
         public var wikipedia: URL?
@@ -93,7 +93,7 @@ public struct NextLaunch: Decodable, Hashable {
     }
 }
 
-public struct Rocket: Decodable {
+public struct Rocket: Codable, Equatable {
     public var name: String
     public var family: String
     public var reusable: Bool
@@ -139,7 +139,7 @@ extension SpaceXApiClient {
         case badStatusCode(Int)
     }
 
-    public static func live(urlSession: URLSession = .shared) -> SpaceXApiClient {
+    public static func live(data: @escaping (URLRequest) async throws -> (Data, URLResponse) = URLSession.shared.data) -> SpaceXApiClient {
         SpaceXApiClient(
             pastLaunches: { page in
                 let decoder = JSONDecoder()
@@ -147,7 +147,7 @@ extension SpaceXApiClient {
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
 
                 let request = URLRequest(url: apiURL(path: "/spacex/v4/launches/past"))
-                let (data, response) = try await urlSession.data(for: request)
+                let (data, response) = try await data(request)
                 try validate(response: response)
                 let launches = try decoder.decode([PastLaunch].self, from: data)
                 return paginate(list: launches, page: page)
@@ -158,7 +158,7 @@ extension SpaceXApiClient {
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
 
                 let request = URLRequest(url: apiURL(path: "/spacex/v4/launches/next"))
-                let (data, response) = try await urlSession.data(for: request)
+                let (data, response) = try await data(request)
                 try validate(response: response)
                 return try decoder.decode(NextLaunch?.self, from: data)
             },
@@ -168,7 +168,7 @@ extension SpaceXApiClient {
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
 
                 let request = URLRequest(url: apiURL(path: "/spacex/v4/rockets"))
-                let (data, response) = try await urlSession.data(for: request)
+                let (data, response) = try await data(request)
                 try validate(response: response)
                 let rockets = try decoder.decode([Rocket].self, from: data)
                 return paginate(list: rockets, page: page)
@@ -179,7 +179,7 @@ extension SpaceXApiClient {
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
 
                 let request = URLRequest(url: apiURL(path: "/spacex/v4/rockets"))
-                let (data, response) = try await urlSession.data(for: request)
+                let (data, response) = try await data(request)
                 try validate(response: response)
                 let rockets = try decoder.decode([Rocket].self, from: data)
                 return rockets.first { $0.name.localizedCaseInsensitiveCompare(name) == .orderedSame }
