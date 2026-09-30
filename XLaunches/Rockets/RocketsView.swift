@@ -8,16 +8,21 @@ struct RocketsView: View {
         NavigationStack {
             LoadableView(loadable: viewModel.rockets) { rockets in
                 List(rockets, id: \.name) { rocket in
-                    RocketRow(rocket: rocket)
-
-                    if viewModel.nextPageFailed {
-                        LoadMoreFailedRow { await viewModel.nextPage() }
-                    } else if viewModel.nextPage != nil {
-                        LoadMoreRow { await viewModel.nextPage() }
+                    NavigationLink(value: RocketName(value: rocket.name)) {
+                        RocketRow(rocket: rocket)
                     }
+                }
+
+                if viewModel.nextPageFailed {
+                    LoadMoreFailedRow { await viewModel.nextPage() }
+                } else if viewModel.nextPage != nil {
+                    LoadMoreRow { await viewModel.nextPage() }
                 }
             }
             .navigationTitle("screen.rockets.title")
+            .navigationDestination(for: RocketName.self) { name in
+                RocketDetailsView(viewModel: viewModel.rocketDetails(name: name))
+            }
             .task { await viewModel.load() }
         }
     }

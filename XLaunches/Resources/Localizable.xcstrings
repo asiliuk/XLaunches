@@ -192,6 +192,149 @@
         }
       }
     },
+    "screen.rocket-details.description.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Description"
+          }
+        }
+      }
+    },
+    "screen.rocket-details.failed-launches.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed launches"
+          }
+        }
+      }
+    },
+    "screen.rocket-details.failed-to-find.details.%@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sorry, we have no details for rocket with name: ”%1$(variableName)@”"
+          }
+        }
+      }
+    },
+    "screen.rocket-details.failed-to-find.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to find"
+          }
+        }
+      }
+    },
+    "screen.rocket-details.family.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Family"
+          }
+        }
+      }
+    },
+    "screen.rocket-details.launch-cost.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Launch cost"
+          }
+        }
+      }
+    },
+    "screen.rocket-details.launch-count.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total launches"
+          }
+        }
+      }
+    },
+    "screen.rocket-details.maiden-flight.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maiden flight"
+          }
+        }
+      }
+    },
+    "screen.rocket-details.name.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name"
+          }
+        }
+      }
+    },
+    "screen.rocket-details.reusable.no" : {
+
+    },
+    "screen.rocket-details.reusable.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reusable"
+          }
+        }
+      }
+    },
+    "screen.rocket-details.reusable.yes" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yes"
+          }
+        }
+      }
+    },
+    "screen.rocket-details.section.statistics.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Statistics"
+          }
+        }
+      }
+    },
+    "screen.rocket-details.success-rate.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Success rate"
+          }
+        }
+      }
+    },
+    "screen.rocket-details.successful-launches.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Successful launches"
+          }
+        }
+      }
+    },
     "screen.rockets.title" : {
       "extractionState" : "manual",
       "localizations" : {

@@ -43,4 +43,8 @@ final class RocketsList {
             nextPageFailed = true
         }
     }
+
+    func rocketDetails(name: RocketName) -> RocketDetails {
+        RocketDetails(name: name, client: client)
+    }
 }

@@ -19,6 +19,7 @@ public struct SpaceXApiClient {
     public let pastLaunches: (_ page: Page?) async throws -> [PastLaunch]
     public let nextLaunch: () async throws -> NextLaunch?
     public let rockets: (_ page: Page?) async throws -> [Rocket]
+    public let rocket: (_ name: String) async throws -> Rocket?
 }
 
 // MARK: - Models
@@ -171,6 +172,17 @@ extension SpaceXApiClient {
                 try validate(response: response)
                 let rockets = try decoder.decode([Rocket].self, from: data)
                 return paginate(list: rockets, page: page)
+            },
+            rocket: { name in
+                let decoder = JSONDecoder()
+                decoder.dateDecodingStrategy = .formatted(dayDateFormatter)
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+
+                let request = URLRequest(url: apiURL(path: "/spacex/v4/rockets"))
+                let (data, response) = try await urlSession.data(for: request)
+                try validate(response: response)
+                let rockets = try decoder.decode([Rocket].self, from: data)
+                return rockets.first { $0.name.localizedCaseInsensitiveCompare(name) == .orderedSame }
             }
         )
     }
@@ -226,6 +238,10 @@ extension SpaceXApiClient {
             rockets: { _ in
                 if let delay { try await Task.sleep(for: delay) }
                 throw MockAPIFailure(description: message ?? "#rockets failed")
+            },
+            rocket: { _ in
+                if let delay { try await Task.sleep(for: delay) }
+                throw MockAPIFailure(description: message ?? "#rocket failed")
             }
         )
     }
